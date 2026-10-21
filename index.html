@@ -186,7 +186,7 @@ const CFG={
     clock:{t:"Clock",l:[["07:30","Alarm · sekolah","Alarm lama yang belum pernah kuhapus."],["25:61","Alarm · tanpa nama","Jam ini tidak ada."]]},
     mail:{t:"Mail",l:[["Backup perangkat","Kemarin","Satu arsip lama gagal dipulihkan. Nama file: DREAM_2018.zip."]]},
     music:{t:"Music",l:[["The Sun — NCT DREAM","NCT DREAM · Official MV","Putar videonya. Ada sesuatu yang terasa familier."],["Candy — NCT DREAM","Terakhir diputar","Lagu berhenti di detik 00:17."]]},
-    files:{t:"Files",l:[["DREAM_2018.zip","Arsip · belum dipulihkan","Backup lama dari masa sekolah. Nama file rekaman yang cocok: voice_0217.m4a. Coba gunakan angka di nama file itu untuk Recovery."],["voice_0217.m4a","Audio · 00:08","Rekaman pendek berisi suara pintu dorm dan seseorang berkata, “Besok jangan lupa datang bareng.”"]]},
+    files:{t:"Files",l:[["DREAM_2018.zip","Arsip · belum dipulihkan","Backup lama dari masa sekolah. Nama file rekaman yang cocok: voice_0217.m4a. Coba gunakan angka di nama file itu untuk Recovery."],["voice_0217.m4a","Audio · 00:08","Rekaman singkat dari dorm lama. Suara di belakangnya samar, tapi rasanya pernah gue dengar."]]},
     phone:{t:"Phone",l:[["Chenle","Panggilan masuk · hari ini","Panggilan dari Chenle."]]},
     hist:{t:"Riwayat",l:[["dorm lama","Hari ini","hasil pencarian kosong"],["DREAM_2018","어제","hasil pencarian kosong"]]}
   },
@@ -897,7 +897,7 @@ choose=function(item){
   ];
   CFG.apps.files.l=[
     ['DREAM_2018.zip','Backup · 18 Agu 2018','Jeno: jangan langsung restore. buka metadata dulu. Ada satu album foto yang dipisah dan dilindungi kode. Cek Notes atau email dari gue untuk kodenya.'],
-    ['voice_0217.m4a','Audio · 00:08','Rekaman pendek berisi suara pintu dorm, langkah kaki, dan tiga ketukan. Setelah mendengarnya, kembali ke KakaoTalk—Jeno sedang menunggu jawaban lu.']
+    ['voice_0217.m4a','Audio · 00:08','Rekaman singkat dari dorm lama. Suara di belakangnya samar, tapi rasanya pernah gue dengar. Setelah mendengarkan, kembali ke KakaoTalk.']
   ];
   // Hide the standalone Recovery icon; the feature lives inside Photos only.
   try { const recoveryIcon=document.querySelector('.ap[data-go="recovery"]'); if(recoveryIcon)recoveryIcon.remove(); } catch(e){}
@@ -937,10 +937,10 @@ choose=function(item){
       sendGroupStoryMsg('Renjun','jangan asal buka semua. catet dulu tanggal dan nama filenya.');
     }
     if(id==='files'&&index===1&&!story.memoChatTriggered){story.memoChatTriggered=true;saveStory();
-      sendStoryChat('DREAM 🌙','gue dengerin voice_0217.m4a. ada pintu sama tiga ketukan. ada yang inget suara itu?');
+      sendGroupStoryMsg('me','gue baru dengerin voice_0217.m4a. kayaknya ini rekaman dari dorm lama. ada yang inget kapan kita pernah ngerekam ini?');
       sendGroupStoryMsg('Jeno','gue inget ketukannya. cek email gue dulu sebelum buka album yang dikunci.');
     }
-    if(id==='notes'&&index===0&&!story.codeNoteChatTriggered){story.codeNoteChatTriggered=true;saveStory();sendStoryChat('Jeno','kode 0304 itu bukan tanggal lahir siapa-siapa. itu tanggal backup terakhir kali kebuka. setelah itu, semua catatan soal Mark ilang.');}
+    if(id==='notes'&&index===0&&!story.codeNoteChatTriggered){story.codeNoteChatTriggered=true;saveStory();sendStoryChat('Jeno','kode 0304 itu bukan tanggal lahir siapa-siapa. itu waktu terakhir backup lama ini tercatat. setelah itu, ada bagian yang gak pernah berhasil kebuka lagi.');}
   };
   // No standalone dorm prose: calendar opens a group conversation and starts the next chapter there.
   document.addEventListener('click',function(ev){if(ev.target&&ev.target.id==='enterOldDorm'){ev.preventDefault();ev.stopImmediatePropagation();startOldDorm();}},true);
@@ -1740,6 +1740,26 @@ choose=function(item){
 })();
 </script>
 
+
+<!-- v48 FIX: make the initial lock screen respond reliably when opened as a local HTML file. -->
+<script>
+(function(){
+  function revealPasscode(ev){
+    const lock=document.getElementById('lock');
+    const pw=document.getElementById('pw');
+    if(!lock||!pw||!lock.classList.contains('on')||pw.classList.contains('on')) return;
+    // Any tap/click on the visible lock screen should open the keypad.
+    if(ev && ev.target && ev.target.closest && ev.target.closest('#pw')) return;
+    pw.classList.add('on');
+  }
+  document.addEventListener('pointerdown',revealPasscode,true);
+  document.addEventListener('click',revealPasscode,true);
+  // Ensure the lock screen can receive taps even if an old overlay style persisted.
+  const lock=document.getElementById('lock');
+  if(lock){lock.style.pointerEvents='auto';}
+})();
+</script>
+
 </body>
 
 
@@ -1800,6 +1820,78 @@ choose=function(item){
 })();
 </script>
 
+<!-- v46: persistent clean post-reset phone state; preserve only ordinary group chat and one final note -->
+<script>
+(function(){
+  const RESET_KEY='jisung_au_post_reset_clean_v1';
+  const ordinary=[
+    {day:'2026년 10월 22일 목요일'},
+    ['Haechan','WOI siapa yang ambil hoodie gue 😭 dari tadi nyariin','오전 9:02'],
+    ['Chenle','cek kamar sendiri dulu, hyung. jangan-jangan dipakai tidur lagi','오전 9:02'],
+    ['Haechan','GUE UDAH CEK SEMUA KAMAR 😭','오전 9:03'],
+    ['Jaemin','hehe tadi aku lihat di sofa ruang tengah 🤍','오전 9:03'],
+    ['Renjun','kalian pagi-pagi bisa gak sih gak berisik. jadwal latihan jam 11, jangan telat.','오전 9:04'],
+    ['Jeno','aku udah pesenin van buat jam 10.30. semuanya siap-siap ya','오전 9:04'],
+    ['Chenle','Jisung masih tidur pasti wkwkwk','오전 9:05'],
+    ['me','GUE UDAH BANGUN 😭 baru buka mata langsung diserang','오전 9:05'],
+    ['Haechan','nah orangnya muncul WKWKWK jie, hoodie gue lu yang ambil gak?','오전 9:05'],
+    ['me','enggak hyung 😭 coba cek sofa kata Jaemin','오전 9:06'],
+    ['Jaemin','aku selalu jadi penyelamat rumah ini ya 🥹','오전 9:06'],
+    ['Chenle','penyelamat apaan, kemarin juga lu yang naruh di sofa 😭','오전 9:06'],
+    ['Renjun','udah, fokus sarapan. yang telat traktir kopi nanti.','오전 9:07']
+  ];
+  function clean(){
+    try{
+      if(typeof CFG==='undefined'||!Array.isArray(CFG.kakao))return;
+      const group=CFG.kakao.findIndex(c=>c.name==='DREAM 🌙');
+      // Keep the group conversation alive, but replace all mystery-era group history with everyday chat.
+      if(group>=0){
+        CFG.kakao[group].msgs=ordinary.map(m=>Array.isArray(m)?m.slice():({...m}));
+        if(typeof chatHistory!=='undefined'){
+          if(Array.isArray(chatHistory))chatHistory[group]=ordinary.map(m=>Array.isArray(m)?m.slice():({...m}));
+          else chatHistory[group]=ordinary.map(m=>Array.isArray(m)?m.slice():({...m}));
+        }
+      }
+      // Remove Mark completely from KakaoTalk contacts after the reset.
+      const markIndex=CFG.kakao.findIndex(c=>c.name==='Mark');
+      if(markIndex>=0){CFG.kakao.splice(markIndex,1);if(typeof chatHistory!=='undefined'&&Array.isArray(chatHistory))chatHistory.splice(markIndex,1);else if(typeof chatHistory!=='undefined'&&chatHistory)delete chatHistory[markIndex];}
+      // The private note conversation is empty after reset.
+      const privateIndex=CFG.kakao.findIndex(c=>c.name==='Jisung (catatan pribadi)');
+      if(privateIndex>=0){CFG.kakao[privateIndex].msgs=[];if(typeof chatHistory!=='undefined'&&chatHistory)chatHistory[privateIndex]=[];}
+      if(CFG.apps){
+        if(CFG.apps.photos)CFG.apps.photos.hiddenMemories=[];
+        if(CFG.apps.mail)CFG.apps.mail.l=[];
+        if(CFG.apps.files)CFG.apps.files.l=[];
+        if(CFG.apps.notes)CFG.apps.notes.l=[['7 Dream','Catatan terakhir','']];
+      }
+      if(typeof story!=='undefined'){
+        // Clear mystery progression flags but preserve the emotional memory that Jisung remembers.
+        Object.keys(story).forEach(k=>{if(/recovery|mark|dream|clue|mystery|ending|photo|email|note|file|mentioned|checked|realized|loop/i.test(k))delete story[k];});
+        story.postResetRemembered=true;
+        if(typeof saveStory==='function')saveStory();
+      }
+      if(typeof saveHistory==='function')saveHistory();
+      try{
+        localStorage.setItem(RESET_KEY,'1');
+        // Purge stale legacy chat/story copies so previous test runs cannot repopulate Mark's messages.
+        ['jisung_au_chat_history_v4','jisung_au_chat_history_v5','jisung_au_chat_history_v6','jisung_au_chat_history_v7','jisung_au_story_choices_v1'].forEach(k=>localStorage.removeItem(k));
+        if(typeof chatHistory!=='undefined')localStorage.setItem('jisung_au_chat_history_v5',JSON.stringify(chatHistory));
+      }catch(e){}
+      if(typeof renderKl==='function')renderKl();
+    }catch(e){console.warn('Clean post-reset state:',e)}
+  }
+  // Apply persisted clean state whenever this HTML is reopened after the reset.
+  try{if(localStorage.getItem(RESET_KEY)==='1')setTimeout(clean,0)}catch(e){}
+  const oldChoose=window.choose;
+  if(typeof oldChoose==='function')window.choose=function(item){
+    const isMark=!!(item&&/^mark-reply-/.test(item.id||''));
+    const result=oldChoose(item);
+    if(isMark)setTimeout(clean,5000);
+    return result;
+  };
+})();
+</script>
+
 </html>
 
 <!-- v43: post-Mark reply performs the full story reset, restarts The Sun, and restores ordinary Dream chats -->
@@ -1808,7 +1900,7 @@ choose=function(item){
   if(typeof window.choose!=='function') return;
   const priorChoose=window.choose;
   const normalDreamChat=[
-    ['day','2026년 10월 22일 목요일'],
+    {day:'2026년 10월 22일 목요일'},
     ['Haechan','WOI siapa yang ambil hoodie gue 😭 dari tadi nyariin','오전 9:02'],
     ['Chenle','cek kamar sendiri dulu, hyung. jangan-jangan dipakai tidur lagi','오전 9:02'],
     ['Haechan','GUE UDAH CEK SEMUA KAMAR 😭','오전 9:03'],
@@ -1838,7 +1930,7 @@ choose=function(item){
             if(typeof renderKl==='function')renderKl();
           }
           const audio=document.getElementById('theSunAudio');
-          if(audio){audio.pause();audio.currentTime=0;audio.play().catch(()=>{});}
+          if(audio){audio.play().catch(()=>{});}
           const player=document.getElementById('sunLockPlayer');
           if(player){const play=player.querySelector('.sunPlay');if(play)play.textContent='Ⅱ';}
         }catch(e){console.warn('Post-reset polish:',e);}
@@ -1872,7 +1964,7 @@ choose=function(item){
      const end=document.getElementById('end');
      if(end){end.classList.add('reset-transition','on');}
      const player=document.getElementById('sunLockPlayer');if(player)player.style.display='none';
-     const audio=document.getElementById('theSunAudio');if(audio){audio.pause();try{audio.currentTime=0}catch(e){}}
+     const audio=document.getElementById('theSunAudio');if(audio){audio.play().catch(()=>{});}
      // Short black-screen reset, then restore the familiar initial lock screen.
      setTimeout(()=>{
        if(end)end.classList.remove('on','reset-transition');
@@ -1886,5 +1978,106 @@ choose=function(item){
    },500);
    return result;
  };
+})();
+</script>
+
+
+<!-- v47: final fixes requested for post-reset AU state -->
+<style>
+#lock.post-reset-lock #sunLockPlayer{
+  bottom:250px!important;
+  z-index:18!important;
+}
+#lock.post-reset-lock .notif{
+  bottom:100px!important;
+  z-index:12!important;
+  max-height:78px!important;
+  overflow:hidden!important;
+}
+#lock.post-reset-lock .hint{bottom:24px!important}
+</style>
+<script>
+(function(){
+  const RESET_KEY='jisung_au_post_reset_clean_v1';
+  const $=id=>document.getElementById(id);
+  function applyPostReset(){
+    try{
+      if(typeof CFG==='undefined')return;
+      const group=CFG.kakao.findIndex(c=>c.name==='DREAM 🌙');
+      const ordinary=[
+        {day:'2026년 10월 22일 목요일'},
+        ['Haechan','WOI siapa yang ambil hoodie gue 😭 dari tadi nyariin','오전 9:02'],
+        ['Chenle','cek kamar sendiri dulu, hyung. jangan-jangan dipakai tidur lagi','오전 9:02'],
+        ['Haechan','GUE UDAH CEK SEMUA KAMAR 😭','오전 9:03'],
+        ['Jaemin','hehe tadi aku lihat di sofa ruang tengah 🤍','오전 9:03'],
+        ['Renjun','kalian pagi-pagi bisa gak sih gak berisik. jadwal latihan jam 11, jangan telat.','오전 9:04'],
+        ['Jeno','aku udah pesenin van buat jam 10.30. semuanya siap-siap ya','오전 9:04'],
+        ['Chenle','Jisung masih tidur pasti wkwkwk','오전 9:05'],
+        ['me','GUE UDAH BANGUN 😭 baru buka mata langsung diserang','오전 9:05'],
+        ['Haechan','nah orangnya muncul WKWKWK jie, hoodie gue lu yang ambil gak?','오전 9:05'],
+        ['me','enggak hyung 😭 coba cek sofa kata Jaemin','오전 9:06'],
+        ['Jaemin','aku selalu jadi penyelamat rumah ini ya 🥹','오전 9:06'],
+        ['Chenle','penyelamat apaan, kemarin juga lu yang naruh di sofa 😭','오전 9:06'],
+        ['Renjun','udah, fokus sarapan. yang telat traktir kopi nanti.','오전 9:07']
+      ];
+      if(group>=0){
+        CFG.kakao[group].msgs=ordinary.map(m=>Array.isArray(m)?m.slice():({...m}));
+        if(typeof chatHistory!=='undefined'&&chatHistory)chatHistory[group]=ordinary.map(m=>Array.isArray(m)?m.slice():({...m}));
+      }
+      // Remove the Mark contact and Jisung's private clue chat from the post-reset phone.
+      for(const name of ['Mark','Jisung (catatan pribadi)']){
+        const ix=CFG.kakao.findIndex(c=>c.name===name);
+        if(ix>=0){
+          CFG.kakao.splice(ix,1);
+          if(typeof chatHistory!=='undefined'&&Array.isArray(chatHistory))chatHistory.splice(ix,1);
+        }
+      }
+      if(CFG.apps){
+        if(CFG.apps.mail)CFG.apps.mail.l=[];
+        if(CFG.apps.files)CFG.apps.files.l=[];
+        if(CFG.apps.notes)CFG.apps.notes.l=[['7 Dream','Catatan terakhir','']];
+        if(CFG.apps.photos){
+          CFG.apps.photos.hiddenMemories=[];
+          if(Array.isArray(CFG.apps.photos.photos)){
+            CFG.apps.photos.photos=CFG.apps.photos.photos.filter(p=>{
+              const label=String(Array.isArray(p)?p[2]:(p&&p.title)||'').toLowerCase();
+              return !/(mark|7 dream|7dream|dream_2018|recovery|backup|dorm lama|foto.*ber-7|tujuh orang)/i.test(label);
+            });
+          }
+        }
+      }
+      try{
+        localStorage.setItem(RESET_KEY,'1');
+        if(typeof saveHistory==='function')saveHistory();
+        if(typeof saveStory==='function')saveStory();
+      }catch(e){}
+      if(typeof renderKl==='function')renderKl();
+      const lock=$('lock');
+      if(lock)lock.classList.add('post-reset-lock');
+      const player=$('sunLockPlayer');
+      if(player)player.style.display='flex';
+    }catch(e){console.warn('Post-reset cleanup:',e)}
+  }
+  // A real click on a Mark reply is the best chance the browser gives us to start audio.
+  // Audio will only be audible if the referenced the-sun.wav file is present in the site.
+  document.addEventListener('click',function(ev){
+    const target=ev.target.closest('[data-id],button,[role="button"]');
+    if(!target)return;
+    const id=String(target.dataset.id||target.id||'');
+    if(!/^mark-reply-/.test(id))return;
+    const audio=$('theSunAudio');
+    if(audio)audio.play().catch(()=>{});
+    setTimeout(applyPostReset,5200);
+  },true);
+  try{
+    if(localStorage.getItem(RESET_KEY)==='1'){
+      setTimeout(applyPostReset,80);
+    }
+  }catch(e){}
+  const lock=$('lock');
+  if(lock){
+    const observer=new MutationObserver(()=>{if(lock.classList.contains('on')&&localStorage.getItem(RESET_KEY)==='1')lock.classList.add('post-reset-lock')});
+    observer.observe(lock,{attributes:true,attributeFilter:['class']});
+  }
 })();
 </script>
