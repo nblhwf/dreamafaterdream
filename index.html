@@ -1823,6 +1823,46 @@ choose=function(item){
 
 
 
+
+<!-- v48: reliable lock-screen touch and passcode input fix -->
+<style>
+#lock{pointer-events:auto!important;touch-action:manipulation!important}
+#lock > :not(#pw){pointer-events:auto}
+#pw{z-index:200!important;pointer-events:auto!important;touch-action:manipulation}
+#pw *{pointer-events:auto}
+#pad{position:relative;z-index:2;pointer-events:auto}
+#pad b[data-n],#can{position:relative;z-index:3;pointer-events:auto;touch-action:manipulation}
+#sunLockPlayer{touch-action:manipulation}
+#end:not(.on){display:none!important;pointer-events:none!important}
+#end.on{pointer-events:auto!important}
+</style>
+<script>
+(function(){
+  const lock=document.getElementById('lock');
+  const pw=document.getElementById('pw');
+  const pad=document.getElementById('pad');
+  const cancel=document.getElementById('can');
+  if(!lock||!pw||!pad)return;
+  // Delegate keypad events so they still work if earlier scripts replace innerHTML.
+  lock.onclick=function(e){
+    if(e.target.closest('#pw'))return;
+    if(e.target.closest('#sunLockPlayer'))return;
+    pw.classList.add('on');
+  };
+  pad.addEventListener('click',function(e){
+    const key=e.target.closest('b[data-n]');
+    if(!key)return;
+    e.stopPropagation();
+    // If the original handler is present, let it process the key.
+    if(typeof key.onclick==='function')return;
+    if(typeof window.__dadPasscodeTap==='function')window.__dadPasscodeTap(key.dataset.n);
+  });
+  if(cancel)cancel.onclick=function(e){e.stopPropagation();pw.classList.remove('on');};
+  // Keep the lock and keypad above decorative layers without blocking their own controls.
+  lock.style.pointerEvents='auto';pw.style.pointerEvents='auto';
+})();
+</script>
+
 </body>
 
 
