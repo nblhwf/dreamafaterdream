@@ -1158,13 +1158,13 @@ choose=function(item){
       if(insertAt<0)insertAt=existing.length;
       existing.splice(insertAt,0,
         day('2026년 10월 17일 토요일'),
-        msg('Chenle','aku sedang menunggumu.. asik menunggu siapa sih? 😏','오후 10:18'),
-        msg('Haechan','ANJIRRRR CAPTIONNYA 😭 JIE LU NUNGGUIN SIAPA? JANGAN BILANG GUE GAK DIAJAK TAU','오후 10:19'),
-        msg('me','lu semua kenapa sih baru liat caption doang udah ribut','오후 10:19',true),
-        msg('Jeno','gue cuma mau bilang, caption lu lebih menarik perhatian daripada fotonya','오후 10:20'),
-        msg('Jaemin','cieee jie 🥹 lucu banget sih. tapi beneran, siapa yang lu tunggu?','오후 10:20'),
-        msg('Renjun','ㅋㅋㅋㅋ chenle baru nanya sekali, haechan udah bikin konferensi pers','오후 10:21'),
-        msg('Renjun','tapi gue juga penasaran sih. siapa?','오후 10:21'),
+        msg('Chenle','aku sedang menunggumu.. ㅋㅋㅋㅋ','오후 10:18'),
+        msg('Haechan','NUNGGUIN SIAPA SIH? HAHAHA','오후 10:19'),
+        msg('me','kan.. mulai deh','오후 10:19',true),
+        msg('Jeno','gue cuma mau bilang, jangan terlalu menunggu gitu ah','오후 10:20'),
+        msg('Jaemin','aingoo jisungie, lagi nungguin apa sih?','오후 10:20'),
+        msg('Renjun','ㅋㅋㅋㅋ kiyowooo','오후 10:21'),
+        msg('Renjun','tapi gue juga penasaran. nungguin siapa sih jie?','오후 10:21'),
         msg('Haechan','JIE DIEM BERARTI BENER ADA ORANGNYA HAHAHAHA','오후 10:22'),
         msg('me','gue mute grup ini aja kali ya','오후 10:22',true)
       );
@@ -1176,11 +1176,11 @@ choose=function(item){
       existing.splice(at,0,
         msg('Haechan','habis music show makan kimchi jjigae gak? gue udah laper dari soundcheck','오후 5:46'),
         msg('Chenle','lu tuh bisa mikir makanan pas lagi rehearsal juga ya','오후 5:47'),
-        msg('Haechan','daripada mikirin koreo pas makan, gak tenang hidup gue','오후 5:47'),
+        msg('Haechan','prioritas bro','오후 5:47'),
         msg('Jeno','ikut. tapi kelarin jadwal dulu. manager hyung udah nyariin dari tadi','오후 5:48'),
         msg('Jaemin','gue cari tempat yang deket aja. jie ikut kan?','오후 5:49'),
-        msg('me','ikut. tapi kalau kepedesan gue duduk sebelah jaemin hyung','오후 5:50',true),
-        msg('Renjun','duduk sebelah siapa juga gak bikin cabainya berkurang','오후 5:50')
+        msg('me','ikut. tapi request jangan pedes','오후 5:50',true),
+        msg('Renjun','yaudah nanti berdua sama gue','오후 5:50')
       );
     }
     group.msgs=existing;
@@ -1211,7 +1211,7 @@ choose=function(item){
   triggerClueChat=function(id,index){
     if(id==='files'&&index===0&&!story.v33BackupReply){
       story.v33BackupReply=true;story.checkedArchive=true;saveStory();
-      if(gi>=0){open(gi);addMsg('me','hyung, gue buka detail backupnya. tanggalnya 18 agustus 2018. kok gue ngerasa pernah lihat ini?','오후 8:14');sendGroupStoryMsg('Jeno','gue baru cek email lama. folder itu pernah disalin sebelum backup berhenti. cek Mail bentar, terus balik sini.');sendGroupStoryMsg('Haechan','gue tadinya mau bilang paling cuma foto lama. tapi kenapa gue juga ngerasa pernah ada di sana?');sendGroupStoryMsg('Renjun','pelan-pelan aja, jie. kalau lu ngerasa pernah lihat sesuatu, mungkin ada alasannya. kita temenin sampai lu inget.');sendGroupStoryMsg('Chenle','jie, lu inget foto abis konser yang kita ambil rame-rame gak? coba cari di Photos.');}
+      if(gi>=0){open(gi);addMsg('me','hyung, gue buka detail backupnya. tanggalnya 18 agustus 2018. kok gue ngerasa pernah lihat ini?','오후 8:14');sendGroupStoryMsg('Jeno','gue baru cek email lama. folder itu pernah disalin sebelum backup berhenti. coba cek emailnya.');sendGroupStoryMsg('Haechan','gue tadinya mau bilang paling cuma foto lama. tapi kenapa gue juga ngerasa pernah ada di sana?');sendGroupStoryMsg('Renjun','pelan-pelan aja, jie. kalau lu ngerasa pernah lihat sesuatu, mungkin ada alasannya..');sendGroupStoryMsg('Chenle','jie, lu inget foto abis konser yang kita ambil rame-rame gak? coba cari di Photos.');}
       return;
     }
     if(id==='files'&&index===1&&!story.v33MemoReply){
@@ -1230,7 +1230,7 @@ choose=function(item){
   };
   // Keep the code note about the backup log, not about Mark; Jeno does not identify Mark before the photos do.
   const mail=CFG.apps.mail.l;
-  if(mail&&mail[0])mail[0][2]='Jisung, kalau lu buka ini berarti backup lama itu masih ada. Gue nemu log sinkronisasi yang berhenti di 03:04. Buka Photos, masuk ke album Recovery, lalu pakai kode 0304. Gue belum tahu semua isi album itu. Setelah lu lihat, balik ke KakaoTalk. Gue bakal cerita apa yang gue inget.';
+  if(mail&&mail[0])mail[0][2]='Jisung, kalau lu buka ini berarti backup lama itu masih ada. Gue nemu log sinkronisasi yang berhenti di 03:04. Buka Photos, masuk ke album Recovery, kode nya 0304. Gue belum tahu semua isi album itu. coba cek dulu, kabarin gue kalau udah nemu.';
   CFG.apps.notes.l[0][2]='kode album Recovery: 0304. Jeno bilang ini tercatat di log sinkronisasi terakhir.';
   // Final memory: group discussion first, then Mark's message arrives only at the very end.
   document.addEventListener('click',function(ev){
@@ -1244,10 +1244,10 @@ choose=function(item){
         open(giNow);
         addMsg('me','gue inget semuanya sekarang. gue inget Mark hyung. gue inget kita pernah jadi tujuh.','오후 9:24');
         sendGroupStoryMsg('Jeno','sekarang gue ngerti. yang hilang bukan cuma foto, tapi bagian ingatan kita setiap kali siklusnya mulai lagi.');
-        sendGroupStoryMsg('Renjun','jie, gue lega lu akhirnya inget. dan maaf ya, tadi gue sempat ketawa waktu chenle mulai ngeledek lu.');
-        sendGroupStoryMsg('Jaemin','jie 🥺 nanti kita makan bareng lagi, ya. kali ini lengkap. gue kangen banget sama hari-hari itu.');
-        sendGroupStoryMsg('Haechan','gue biasanya paling kenceng ngeledek lu, tapi sekarang malah gak bisa ngomong banyak. kangen, anjir.');
-        sendGroupStoryMsg('Chenle','jie, lu tau gak? tiap kali tidur lu nyenyak banget, lu selalu ngulang mimpi yang sama. pas bangun, lu lupa lagi dan mulai ngerasa ada yang kurang. gue harap abis ini lu gak lupa lagi, Jie.');
+        sendGroupStoryMsg('Renjun','gue lega lu akhirnya inget, gue harap kita semua gak pernah lupa lagi karna itu juga bagian dari kita.');
+        sendGroupStoryMsg('Jaemin','nanti kita makan bareng lagi ya. kali ini lengkap. gue kangen banget sama hari-hari itu.');
+        sendGroupStoryMsg('Haechan','gue juga jadi pengen ngevila lagi deh.');
+        sendGroupStoryMsg('Chenle','jie, lu tau gak? tiap kali tidur lu nyenyak banget, lu selalu ngulang mimpi yang sama. pas bangun, lu lupa lagi dan mulai ngerasa ada yang kurang. gue harap abis ini lu gak lupa lagi.');
       }
       const mi=idxOf('Mark');
       if(mi>=0){
@@ -1261,9 +1261,9 @@ choose=function(item){
           renderKl();open(mi);
           addMsg('me','...');
           setChoices([
-            {label:'Enggak, Hyung. Kali ini gue udah inget semuanya.','id':'mark-reply-remember'},
-            {label:'Iya, tapi sekarang gue tahu siapa yang selama ini hilang.','id':'mark-reply-dream'},
-            {label:'Gue masih di sini, Hyung. Gue gak bakal lupa lagi.','id':'mark-reply-stay'}
+            {label:'Enggak, hyung. Kali ini gue udah inget semuanya.','id':'mark-reply-remember'},
+            {label:'Hyung? Gue rasa gue masih di mimpi ini.','id':'mark-reply-dream'},
+            {label:'Hyung, sorry.. Gue janji gak bakal lupa lagi.','id':'mark-reply-stay'}
           ]);
         },850);
       }
