@@ -1966,18 +1966,18 @@ choose=function(item){
   const priorChoose=window.choose;
   const normalDreamChat=[
     ['day','2026년 10월 22일 목요일'],
-    ['Haechan','WOI siapa yang ambil hoodie gue?','오전 9:02'],
-    ['Chenle','cek kamar,jangan-jangan ada di kasur lagi','오전 9:02'],
+    ['Haechan','WOI siapa yang ambil hoodie gue','오전 9:02'],
+    ['Chenle','coba cek di kamar, hyung. siapa tau ada di kasur','오전 9:02'],
     ['Haechan','GUE UDAH CEK SEMUA KAMAR GAK ADA','오전 9:03'],
     ['Jaemin','tadi gue lihat di sofa ruang tengah','오전 9:03'],
-    ['Renjun','kalian pagi-pagi bisa gak sih gak berisik.','오전 9:04'],
-    ['Jeno','gue udah pesenin van buat jam 10.30. semuanya siap-siap, jadwal latihan jam 11, jangan telat','오전 9:04'],
+    ['Renjun','pagi-pagi bisa gak sih gak berisik gak sih','오전 9:04'],
+    ['Jeno','aku udah pesenin van buat jam 10.30. semuanya siap-siap,jadwal latihan jam 11, jangan telat.','오전 9:04'],
     ['Chenle','Jisung masih tidur pasti wkwkwk','오전 9:05'],
     ['me','GUE UDAH BANGUN','오전 9:05'],
-    ['Haechan','nah orangnya muncul WKWKWK hoodie gue lu jadi pinjem gak kemarin?','오전 9:05'],
-    ['me','enggak, coba cek di sofa kata Jaemin hyung','오전 9:06'],
+    ['Haechan','nah orangnya muncul WKWKWK jie, liat hoodie gue gak?','오전 9:05'],
+    ['me','enggak, itu coba cek sofa kata Jaemin hyung','오전 9:06'],
     ['Jaemin','gue bilang di sofa dari tadi','오전 9:06'],
-    ['Chenle','gue udah masak sama jaemin hyung yg mau ke meja makan sekarang','오전 9:06'],
+    ['Chenle','weh cepet sarapan ke bawah, gue udah masak','오전 9:06'],
     ['Renjun','yang telat cuci piring.','오전 9:07']
   ];
   window.choose=function(item){
@@ -2284,7 +2284,7 @@ choose=function(item){
 (function(){
   const FINAL_NOTE = "dream after dream\n\n*maybe the ending was never about waking up.*\n\ndulu, menjadi tujuh terasa seperti sesuatu yang akan berlangsung selamanya. kami tak pernah tahu bahwa momen-momen kecil itu kelak menjadi hal-hal yang ingin kami tinggali sedikit lebih lama.\n\nmungkin itu kenapa mimpi yang sama terus berulang, until one day, we finally remembered everything.\n\nand for the first time, we let the dream end. bukan karena dia tak ingin tinggal lebih lama, but because not everything has to last forever to have been real.\n\nthe loop was over. the memories stayed.\n\nand as six of them continued into tomorrow, the seven of them would always remain a part of yesterday.\n\n*we move forward with six, but we’ll never forget what it meant to be seven.*";
   const RESET_NOTE = ['dream after dream','Catatan terakhir',FINAL_NOTE];
-  const TRAINING_NOTICE = 'Jeno: besok latihan jam 10. jangan ada yang telat.';
+  const TRAINING_NOTICE = 'Jeno: besok latihan jam 10. jangan ada yang telat, manager hyung udah ngingetin.';
   let notificationShown = false;
 
   function afterReset(){
@@ -2340,7 +2340,7 @@ choose=function(item){
       const idx = CFG.kakao.findIndex(c => c && c.name === 'DREAM 🌙');
       if (idx < 0) return;
       const group = CFG.kakao[idx];
-      const text = 'besok latihan jam 10. jangan ada yang telat, manager hyung udah ngingetin.';
+      const text = 'Besok latihan jam 10. jangan ada yang telat.';
       const time = '오전 9:05';
       const same = m => Array.isArray(m) && m[0] === 'Jeno' && m[1] === text;
       if (!Array.isArray(group.msgs)) group.msgs = [];
