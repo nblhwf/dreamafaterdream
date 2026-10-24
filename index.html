@@ -124,6 +124,20 @@ body{background:#0b0b10;display:flex;align-items:center;justify-content:center;f
     <div class="ag" id="ag"></div><div class="srch">🔍 Search</div><div class="dock" id="dock"></div>
   </div>
 
+  <div class="screen light" id="settings" style="background:#f5f4f0;color:#242424;z-index:30;padding:24px;box-sizing:border-box">
+    <div class="nav" style="margin:0 -4px 28px"><span id="settingsBack" style="cursor:pointer">‹ Kembali</span><span style="font-size:12px;color:#777">iPhone Settings</span></div>
+    <div style="font-size:12px;letter-spacing:2px;color:#8b8175;margin-bottom:8px">SYSTEM</div>
+    <h1 style="font-size:28px;margin:0 0 10px">Pengaturan</h1>
+    <p style="font-size:13px;line-height:1.65;color:#777;margin:0 0 24px">Mulai lagi dari awal kalau kamu ingin mengulang cerita Dream After Dream.</p>
+    <div style="background:white;border-radius:16px;padding:16px;box-shadow:0 2px 10px #00000008">
+      <div style="font-weight:650;font-size:15px;margin-bottom:7px">Dream After Dream</div>
+      <div style="font-size:12px;line-height:1.6;color:#777;margin-bottom:15px">Restart akan menghapus progres cerita yang tersimpan di browser ini, lalu mengembalikan ponsel ke awal cerita.</div>
+      <button id="restartStory" type="button" style="width:100%;padding:14px;border:0;border-radius:12px;background:#242424;color:white;font:600 14px -apple-system,BlinkMacSystemFont,Arial;cursor:pointer">↻ Restart Story</button>
+      <div id="restartStatus" role="status" style="display:none;margin-top:12px;padding:10px;border-radius:10px;background:#eef3e8;color:#34452b;font-size:12px;line-height:1.5">Mengatur ulang cerita…</div>
+    </div>
+    <div style="font-size:11px;line-height:1.6;color:#999;margin-top:15px">Foto dan aset yang tertanam di file HTML tidak dihapus.</div>
+  </div>
+
   <div class="screen light" id="app"><div class="nav"><span id="b1">‹ Kembali</span></div><h1 id="at"></h1><div class="bdy" id="ab"></div></div>
   <div class="screen light" id="det"><div class="nav"><span id="b2">‹ Kembali</span></div><h1 id="dt"></h1><div class="bdy"><div class="dtx" id="db"></div></div></div>
 
@@ -428,11 +442,11 @@ document.querySelectorAll('#pad b[data-n]').forEach(b=>b.onclick=()=>{if(buf.len
 /* home */
 const w=CFG.weather;$('wc').innerHTML=`<b style="font-size:15px;font-weight:600">${w.city} ➤</b>`;$('wt').textContent=w.t;$('wd').innerHTML=`🌙<br>${w.c}<br>${w.hl}`;
 $('wcal').innerHTML=`<div class="r">${CFG.wd}</div><div class="d">${CFG.d}</div><div class="ev">${CFG.event[0]}<br><small>${CFG.event[1]}</small></div><div style="color:#8e8e93;margin-top:8px;font-size:13px">${CFG.more}</div>`;
-const I=[["Photos","🌸","#fff","photos"],["Notes","📝","#fff3b0","notes"],["Files","📁","#e9e9ed","files"],["Calendar",`<div style="text-align:center;line-height:1"><div style="color:#f33;font-size:11px;font-weight:600">${CFG.wd}</div><div style="font-size:30px">${CFG.d}</div></div>`,"#fff","cal"],["Clock","🕙","#111","clock"],["Reminders","☑️","#fff","reminders"],["Mail","✉️","#3b9bff","mail"],["Recovery","🗂️","#d9d8d4","recovery"]];
+const I=[["Photos","🌸","#fff","photos"],["Notes","📝","#fff3b0","notes"],["Files","📁","#e9e9ed","files"],["Calendar",`<div style="text-align:center;line-height:1"><div style="color:#f33;font-size:11px;font-weight:600">${CFG.wd}</div><div style="font-size:30px">${CFG.d}</div></div>`,"#fff","cal"],["Clock","🕙","#111","clock"],["Reminders","☑️","#fff","reminders"],["Mail","✉️","#3b9bff","mail"],["Pengaturan","⚙️","#d9d8d4","settings"],["Recovery","🗂️","#d9d8d4","recovery"]];
 const D=[["","📞","#4cd964","phone"],["","🧭","#fff","safari"],["","💬","#fee500","kk",CFG.badge.kk],["","🎵","#fb5c74","music"]];
 const ap=a=>`<div class="ap" data-go="${a[3]}"><div class="ic" style="background:${a[2]}">${a[1]}${a[4]?`<span class="bd">${a[4]}</span>`:''}</div>${a[0]}</div>`;
 $('ag').innerHTML=I.map(ap).join('');$('dock').innerHTML=D.map(ap).join('');
-document.querySelectorAll('.ap').forEach(e=>{e.onclick=(ev)=>{ev.preventDefault();ev.stopPropagation();go(e.dataset.go)}});
+document.querySelectorAll('.ap').forEach(e=>{e.onclick=(ev)=>{ev.preventDefault();ev.stopPropagation();if(e.dataset.go==='settings'){show('settings');return;}go(e.dataset.go)}});
 let prev='home';
 function list(id,backTo){const a=CFG.apps[id];if(!a){show('home');return} $('at').textContent=(id==='photos' && story.realizedDream)?'Recovered Memories':a.t;
   const memoriesVisible=!!story.recoveryUnlocked; // foto dengan Mark baru muncul setelah petunjuk mimpi tersambung
@@ -533,7 +547,7 @@ function list(id,backTo){const a=CFG.apps[id];if(!a){show('home');return} $('at'
  $('answerCall').onclick=answerChenleCall;
  $('declineCall').onclick=declineChenleCall;
  $('endCall').onclick=()=>{clearTimeout(timer);stopCallSound();$('callStatus').textContent='Panggilan berakhir';$('callDialogue').textContent+='\n\n— Panggilan berakhir —';timer=setTimeout(()=>show('home'),500)};
- function go(id){try{localStorage.setItem('jisung_au_last_app_v1',id)}catch(e){} if(id==='recovery'){ $('recoveryCode').value='';$('recoveryStatus').textContent='';show('recovery');return } if(id==='phone'){list('phone','home');return}if(id==='kk'){ $('end').classList.remove('on'); renderKl(); show('kk'); return }if(id==='safari'){show('saf');return}if(CFG.apps[id]){list(id,'home');return}show('home')}
+ function go(id){try{localStorage.setItem('jisung_au_last_app_v1',id)}catch(e){} if(id==='settings'){show('settings');return} if(id==='recovery'){ $('recoveryCode').value='';$('recoveryStatus').textContent='';show('recovery');return } if(id==='phone'){list('phone','home');return}if(id==='kk'){ $('end').classList.remove('on'); renderKl(); show('kk'); return }if(id==='safari'){show('saf');return}if(CFG.apps[id]){list(id,'home');return}show('home')}
 /* safari */
 $('fv').innerHTML=CFG.safari.fav.map(f=>`<div><i style="background:${f[1]}">${f[2]}</i>${f[0]}</div>`).join('');
 $('pv').textContent=CFG.safari.privacy;$('pt').textContent=`In the last seven days, Safari has prevented ${CFG.safari.privacy} trackers from profiling you.`;
@@ -1811,6 +1825,115 @@ choose=function(item){
   }
 })();
 </script>
+
+
+
+
+<script id="dad-settings-click-fix">
+(function(){
+  function wireSettings(){
+    const back=document.getElementById('settingsBack');
+    const restart=document.getElementById('restartStory');
+    if(back && !back.dataset.wired){back.dataset.wired='1';back.addEventListener('click',function(){ if(typeof show==='function') show('home'); else { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on')); document.getElementById('home')?.classList.add('on'); }});}
+    if(restart && !restart.dataset.wired){restart.dataset.wired='1';restart.addEventListener('click',function(){
+      if(!window.confirm('Mulai ulang Dream After Dream dari awal? Progres cerita yang tersimpan akan dihapus.')) return;
+      try {
+        const remove=[];
+        for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k && (/jisung_au|dad|dream.?after.?dream/i.test(k))) remove.push(k);}
+        remove.forEach(k=>localStorage.removeItem(k));
+        sessionStorage.clear();
+      } catch(e) {}
+      window.location.reload();
+    });}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',wireSettings); else wireSettings();
+})();
+</script>
+
+<script id="dad-settings-final-click-fix">
+(function(){
+  // Capture clicks at the phone level so earlier app handlers cannot swallow Settings.
+  var phone = document.getElementById('ph');
+  if (!phone || phone.dataset.settingsFinalWired === '1') return;
+  phone.dataset.settingsFinalWired = '1';
+  phone.addEventListener('click', function(event){
+    var target = event.target;
+    if (!target || !target.closest) return;
+    var settingsIcon = target.closest('.ap[data-go="settings"]');
+    if (settingsIcon) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (typeof window.show === 'function') window.show('settings');
+      else {
+        document.querySelectorAll('.screen').forEach(function(screen){screen.classList.remove('on');});
+        var settingsScreen = document.getElementById('settings');
+        if (settingsScreen) settingsScreen.classList.add('on');
+      }
+      return;
+    }
+    if (target.closest('#settingsBack')) {
+      event.preventDefault(); event.stopPropagation();
+      if (typeof window.show === 'function') window.show('home');
+      else { document.querySelectorAll('.screen').forEach(function(screen){screen.classList.remove('on');}); var home=document.getElementById('home'); if(home)home.classList.add('on'); }
+      return;
+    }
+    if (target.closest('#restartStory')) {
+      event.preventDefault(); event.stopPropagation();
+      if (!window.confirm('Mulai ulang Dream After Dream dari awal? Progres cerita yang tersimpan di browser ini akan dihapus.')) return;
+      try {
+        var keys=[];
+        for(var i=0;i<localStorage.length;i++){var key=localStorage.key(i);if(key && (/jisung_au|dad|dream.?after.?dream/i.test(key))) keys.push(key);}
+        keys.forEach(function(key){localStorage.removeItem(key);});
+        sessionStorage.clear();
+      } catch(error) {
+        window.alert('Browser tidak mengizinkan penghapusan progres. Coba buka file ini di Safari/Chrome biasa.');
+        return;
+      }
+      window.location.reload();
+    }
+  }, true);
+})();
+</script>
+<script id="dad-restart-reliable-v7">
+(function(){
+  function clearStoryAndRestart(){
+    var status=document.getElementById('restartStatus');
+    if(status){status.style.display='block';status.textContent='Mengatur ulang cerita…';}
+    try {
+      // Clear all known AU progress, chat-history and replay keys for this file.
+      var keys=[];
+      for(var i=0;i<localStorage.length;i++){
+        var k=localStorage.key(i);
+        if(k && (/^jisung_au_/i.test(k) || /^dad[_-]/i.test(k) || /dream.?after.?dream.*(story|chat|reset|progress)/i.test(k))) keys.push(k);
+      }
+      keys.forEach(function(k){localStorage.removeItem(k);});
+      try { sessionStorage.clear(); } catch(_) {}
+      // Ensure the unload hook cannot save the completed state back over the cleared keys.
+      try {
+        if(typeof story !== 'undefined') {
+          story = {askedGroup:false,askedChenle:false,checkedPhotos:false,heardMemo:false,choiceTrail:[]};
+        }
+        if(typeof saveStory === 'function') saveStory();
+      } catch(_) {}
+      if(status) status.textContent='Progres direset. Membuka cerita dari awal…';
+      // A short delay lets the user see that the button responded.
+      setTimeout(function(){ window.location.reload(); }, 250);
+    } catch(err) {
+      if(status){status.style.display='block';status.style.background='#f8e8e8';status.style.color='#7b2525';status.textContent='Browser memblokir reset. Coba buka file langsung di Safari atau Chrome.';}
+    }
+  }
+  document.addEventListener('click',function(event){
+    var target=event.target;
+    if(!target || !target.closest) return;
+    var button=target.closest('#restartStory');
+    if(!button) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if(event.stopImmediatePropagation) event.stopImmediatePropagation();
+    clearStoryAndRestart();
+  },true);
+})();
+</script>
 </body>
 
 
@@ -1877,7 +2000,7 @@ choose=function(item){
 <script>
 (function(){
   const $ = id => document.getElementById(id);
-  const markLine = 'jie... km gak masih bermimpi kan?';
+  const markLine = 'jie... km gak masih mimpi kan?';
   const isMarkName = n => /^(mark|jisung \(catatan pribadi\))$/i.test(String(n||'').trim());
   const isDate = m => Array.isArray(m) && String(m[0]||'').toLowerCase()==='day';
   function normalizeDateSeparators(){
@@ -1977,8 +2100,8 @@ choose=function(item){
     ['Chenle','coba cek di kamar, hyung. siapa tau ada di kasur','오전 9:02'],
     ['Haechan','GUE UDAH CEK SEMUA KAMAR GAK ADA','오전 9:03'],
     ['Jaemin','tadi gue lihat di sofa ruang tengah','오전 9:03'],
-    ['Renjun','pagi-pagi bisa gak sih gak berisik gak sih','오전 9:04'],
-    ['Jeno','aku udah pesenin van buat jam 10.30. semuanya siap-siap,jadwal latihan jam 11, jangan telat.','오전 9:04'],
+    ['Renjun','PAGI-PAGI BISA GAK BERISIK GAK SIH?','오전 9:04'],
+    ['Jeno','gue udah bilang manager hyung buat jemput kita jam 10.30. siap-siap,jadwal latihan jam 11, jangan telat.','오전 9:04'],
     ['Chenle','Jisung masih tidur pasti wkwkwk','오전 9:05'],
     ['me','GUE UDAH BANGUN','오전 9:05'],
     ['Haechan','nah orangnya muncul WKWKWK jie, liat hoodie gue gak?','오전 9:05'],
@@ -2291,7 +2414,7 @@ choose=function(item){
 (function(){
   const FINAL_NOTE = "*maybe the ending was never about waking up.*\n\ndulu, menjadi tujuh terasa seperti sesuatu yang akan berlangsung selamanya. kami tak pernah tahu bahwa momen-momen kecil itu kelak menjadi hal-hal yang ingin kami tinggali sedikit lebih lama.\n\nmungkin itu kenapa mimpi yang sama terus berulang, until one day, we finally remembered everything.\n\nand for the first time, we let the dream end. bukan karena dia tak ingin tinggal lebih lama, but because we had finally remembered all the beautiful moments, and learned to carry them as we moved forward.\n\nthe loop was over. the memories stayed.\n\nand as six of them continued into tomorrow, the seven of them would always remain a part of yesterday.\n\n*we move forward with six, but we’ll never forget what it meant to be seven.*";
   const RESET_NOTE = ['dream after dream','Catatan terakhir',FINAL_NOTE];
-  const TRAINING_NOTICE = 'Jeno: latihan jam 11. telat 1 menit push up 10 kali.';
+  const TRAINING_NOTICE = 'Jeno: besok latihan jam 11. telat 1 menit push up 10 kali.';
   let notificationShown = false;
 
   function afterReset(){
@@ -2347,22 +2470,27 @@ choose=function(item){
       const idx = CFG.kakao.findIndex(c => c && c.name === 'DREAM 🌙');
       if (idx < 0) return;
       const group = CFG.kakao[idx];
-      const text = 'Besok latihan jam 10. jangan ada yang telat.';
-      const time = '오전 9:05';
-      const same = m => Array.isArray(m) && m[0] === 'Jeno' && m[1] === text;
+      const dateLabel = '2026년 10월 23일 금요일';
+      const dateRow = ['day', dateLabel];
+      const text = 'Besok latihan jam 11. telat 1 menit push up 10 kali.';
+      const time = '오후 9:05';
+      const isTrainingMessage = m => Array.isArray(m) && m[0] === 'Jeno' && /latihan jam 1[01]|push up/i.test(m[1] || '');
+      const isDateRow = m => Array.isArray(m) && m[0] === 'day' && /2026년 10월 23일/.test(m[1] || '');
       if (!Array.isArray(group.msgs)) group.msgs = [];
-      if (!group.msgs.some(same)) group.msgs.push(['Jeno', text, time]);
-      if (!chatHistory[idx] || !Array.isArray(chatHistory[idx])) {
-        chatHistory[idx] = (group.msgs || []).filter(m => Array.isArray(m) || m?.day || m?.sys)
-          .map(m => Array.isArray(m) ? [...m] : ({...m}));
-      }
-      if (!chatHistory[idx].some(same)) chatHistory[idx].push(['Jeno', text, time]);
+      if (!Array.isArray(chatHistory[idx])) chatHistory[idx] = (group.msgs || []).map(m => Array.isArray(m) ? [...m] : ({...m}));
+
+      // Remove the outdated/duplicate post-reset training reminders, then add one
+      // dated entry after the existing conversation so it appears as a new day.
+      group.msgs = group.msgs.filter(m => !isTrainingMessage(m) && !isDateRow(m));
+      chatHistory[idx] = chatHistory[idx].filter(m => !isTrainingMessage(m) && !isDateRow(m));
+      group.msgs.push(dateRow.slice(), ['Jeno', text, time]);
+      chatHistory[idx].push(dateRow.slice(), ['Jeno', text, time]);
       group.time = time;
       group.unread = Math.max(Number(group.unread || 0), 1);
       if (typeof saveHistory === 'function') saveHistory();
       if (typeof renderKl === 'function') renderKl();
-      if (typeof activeChat !== 'undefined' && activeChat === idx &&
-          typeof paintMsg === 'function' && !document.getElementById('tb')?.textContent.includes(text)) {
+      if (typeof activeChat !== 'undefined' && activeChat === idx && typeof paintMsg === 'function') {
+        paintMsg(dateRow.slice(), false);
         paintMsg(['Jeno', text, time], false);
       }
     } catch(e) { console.warn('Training group message:', e); }
@@ -2415,7 +2543,7 @@ choose=function(item){
   'use strict';
   if (typeof window === 'undefined') return;
   const REPLIES = [
-    {label:'Enggak, Hyung. Kali ini gue udah inget semuanya.', id:'mark-reply-remember'},
+    {label:'Kali ini gue udah inget semuanya.', id:'mark-reply-remember'},
     {label:'Hyung, gue janji akan lanjut ke mimpi selanjutnya.', id:'mark-reply-dream'},
     {label:'Sorry hyung.. Gue gak bakal lupa lagi.', id:'mark-reply-stay'}
   ];
@@ -2435,7 +2563,7 @@ choose=function(item){
         if (!Array.isArray(m)) return true;
         const body = String(m[1]||'').trim();
         if (m[0] === 'me' && body === '...') return false;
-        if (m[0] === 'Mark' && /^(jie\.\.\. km gak masih bermimpi kan\?|Jie, kamu masih bermimpi ya\?)$/i.test(body)) {
+        if (m[0] === 'Mark' && /^(jie\.\.\. km gak masih mimpi kan\?|Jie, kamu masih mimpi ya\?)$/i.test(body)) {
           const sig = body.toLowerCase(); if (seen.has(sig)) return false; seen.add(sig);
         }
         return true;
@@ -2446,7 +2574,7 @@ choose=function(item){
           if (!Array.isArray(m)) return true;
           const body=String(m[1]||'').trim();
           if (m[0]==='me' && body==='...') return false;
-          if (m[0]==='Mark' && /^(jie\.\.\. km gak masih bermimpi kan\?|Jie, kamu masih bermimpi ya\?)$/i.test(body)) { const sig=body.toLowerCase(); if(msgSeen.has(sig))return false; msgSeen.add(sig); }
+          if (m[0]==='Mark' && /^(jie\.\.\. km gak masihmimpi kan\?|Jie, kamu masih mimpi ya\?)$/i.test(body)) { const sig=body.toLowerCase(); if(msgSeen.has(sig))return false; msgSeen.add(sig); }
           return true;
         });
       }
@@ -2505,4 +2633,33 @@ choose=function(item){
   cleanMarkHistory();
 })();
 
+</script>
+
+
+<script>
+/* Settings menu: restart all Dream After Dream progress in this browser. */
+(function(){
+  function byId(id){ return document.getElementById(id); }
+  var backButton=byId('settingsBack');
+  var restartButton=byId('restartStory');
+  if(backButton) backButton.addEventListener('click',function(){
+    if(typeof show==='function') show('home');
+  });
+  if(restartButton) restartButton.addEventListener('click',function(){
+    var confirmed=window.confirm('Mulai ulang Dream After Dream dari awal? Progres cerita yang tersimpan di browser ini akan dihapus.');
+    if(!confirmed) return;
+    try {
+      var keys=[];
+      for(var i=0;i<localStorage.length;i++){
+        var key=localStorage.key(i);
+        if(key && key.indexOf('jisung_au_')===0) keys.push(key);
+      }
+      keys.forEach(function(key){ localStorage.removeItem(key); });
+    } catch(error) {
+      window.alert('Browser tidak mengizinkan penghapusan progres. Coba buka file ini di Safari/Chrome biasa, bukan mode privat.');
+      return;
+    }
+    window.location.reload();
+  });
+})();
 </script>
