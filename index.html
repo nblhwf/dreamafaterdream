@@ -468,9 +468,9 @@ function list(id,backTo){const a=CFG.apps[id];if(!a){show('home');return} $('at'
           $('db').innerHTML='<div class="note-paper" style="white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.75;padding:18px 14px;color:#292725">'+noteText.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*([^*]+)\*/g,'<em>$1</em>')+'</div>';
         }else{
           triggerClueChat('notes',i);
-          if(i===0)$('db').textContent='Hari ini aku harus tanya Chenle soal dorm lama. Aneh, kami sudah sering ke sana, tapi kali ini rasanya seperti ada yang sengaja menunggu aku mengingat sesuatu.';
-          if(i===1)$('db').textContent='Aku mimpi berdiri di lorong panjang. Ada suara yang bilang jangan buru-buru bangun. Aku nggak ingat siapa yang ngomong, cuma setelah bangun rasanya kehilangan sesuatu.';
-          if(i===2)$('db').textContent='Aku mencoba menulis nama kami satu-satu. Mark hyung. Renjun hyung. Jeno hyung. Haechan hyung. Jaemin hyung. Chenle. Aku. Kenapa daftar ini terasa seperti pernah kutulis dengan urutan berbeda?';
+          if(i===0)$('db').textContent='Hari ini gue harus tanya Chenle soal dorm lama. Aneh, kita sering ke sana, tapi kali ini rasanya kayak ada yang sengaja menunggu gue buat inget sesuatu.';
+          if(i===1)$('db').textContent='gue mimpi berdiri di lorong panjang. Ada suara yang bilang jangan buru-buru bangun. Gue nggak ingat siapa yang ngomong, cuma pas bangun rasanya kehilangan sesuatu.';
+          if(i===2)$('db').textContent='gue mencoba menulis nama kita satu-satu. Renjun hyung. Jeno hyung. Haechan hyung. Jaemin hyung. Chenle. Gue. Tapi Kenapa daftar ini rasanya kayak gue pernah tulis dengan urutan berbeda ya?';
         }
       }
       if(id==='mail'||id==='hist'){
@@ -479,7 +479,7 @@ function list(id,backTo){const a=CFG.apps[id];if(!a){show('home');return} $('at'
       }
       if(id==='cal' && /Dorm/.test(a.l[i][0])){story.agreedToVisit=true;saveStory();$('db').innerHTML=`<b>Agenda AU · sementara</b><br>18:00 — latihan (placeholder)<br>20:15 — mampir ke dorm lama<br><small style="color:#777">Jadwal ini belum resmi. Nanti bisa kita ganti setelah kamu kirim jadwal asli mereka.</small><br><br>Ponsel lama masih ada di tas.<br><br><button id="enterOldDorm" style="margin-top:18px;border:0;border-radius:14px;background:#242424;color:#fff;padding:13px 17px;font-size:14px;width:100%">Masuk ke dorm lama →</button>`; }
       if(id==='files' && i===0){story.checkedArchive=true;saveStory();triggerClueChat('files',i);$('db').textContent='Backup ini belum bisa dipulihkan dari sini. Di metadata tertulis: “Perangkat terakhir tersambung ke jaringan dorm lama.” Chenle benar—kamu harus datang besok dan membawa ponsel lama. Coba kembali ke KakaoTalk untuk memastikan rencananya.';}
-      if(id==='files' && i===1){triggerClueChat('files',i);story.heardMemo=true;story.openedMemo=true;seen.add('memo-hint');syncDreamState();saveStory();$('db').innerHTML='<div style="padding:8px 0 18px"><div style="font-size:13px;color:#777;margin-bottom:14px">VOICE MEMOS · voice_0217.m4a · 00:08</div><div style="background:#f1f1f5;border-radius:18px;padding:18px 14px;color:#222"><div style="display:flex;align-items:center;gap:12px"><button id="memoPlay" aria-label="Putar rekaman" style="border:0;border-radius:50%;width:46px;height:46px;background:#e65d5d;color:white;font-size:20px">▶</button><div style="flex:1"><div style="font-weight:600">Rekaman lama</div><div id="memoStatus" style="font-size:12px;color:#777;margin-top:4px">00:00 / 00:08</div></div><div style="color:#e65d5d;font-size:22px">▂▅▃▇▂▆▁</div></div></div><p style="font-size:12px;color:#777;margin-top:12px">Audio asli belum disertakan. Pemutar ini memainkan efek suasana buatan untuk mengetes fungsi audio, bukan suara member.</p></div>';const mb=$('memoPlay'),ms=$('memoStatus');if(mb)mb.onclick=()=>playMemoSound(ms,mb);}
+      if(id==='files' && i===1){triggerClueChat('files',i);story.heardMemo=true;story.openedMemo=true;seen.add('memo-hint');syncDreamState();saveStory();$('db').innerHTML='<div style="padding:8px 0 18px"><div style="font-size:13px;color:#777;margin-bottom:14px">VOICE MEMOS · voice_0217.m4a · 00:08</div><div style="background:#f1f1f5;border-radius:18px;padding:18px 14px;color:#222"><div style="display:flex;align-items:center;gap:12px"><button id="memoPlay" aria-label="Putar rekaman" style="border:0;border-radius:50%;width:46px;height:46px;background:#e65d5d;color:white;font-size:20px">▶</button><div style="flex:1"><div style="font-weight:600">Rekaman lama</div><div id="memoStatus" style="font-size:12px;color:#777;margin-top:4px">00:00 / 00:08</div></div></div></div><p style="font-size:12px;color:#777;margin-top:12px">Audio asli belum disertakan. Pemutar ini memainkan efek suasana buatan untuk mengetes fungsi audio, bukan suara member.</p></div>';const mb=$('memoPlay'),ms=$('memoStatus');if(mb)mb.onclick=()=>playMemoSound(ms,mb);}
        if(id==='phone' && i===0){$('db').textContent='Riwayat panggilan dengan Chenle. Panggilan masuk hanya muncul otomatis saat pertama kali membuka iPhone. Kamu bisa melihat riwayatnya di sini tanpa memulai panggilan baru.';}
       if(id==='music' && i===0){triggerClueChat('music',i);story.heardTheSun=true;saveStory();$('db').textContent='The Sun — NCT DREAM\n\nSaat bagian lagu itu terdengar, Jisung merasa pernah mendengar hitungan yang sama di suatu tempat. Bukan liriknya yang tertinggal, melainkan suara ketukan pelan tiga kali—lalu jeda. Ia membuka pemutar lagi, mencoba memastikan apakah itu cuma perasaannya.';}
     }
@@ -617,7 +617,7 @@ function sendGroupStoryMsg(name,message,time='오후 8:14'){
 function triggerClueChat(id,index){
  if(!story.autoChats)story.autoChats={};const key=id+':'+index;if(story.autoChats[key])return;story.autoChats[key]=true;saveStory();
  if(id==='photos')sendStoryChat('Chenle','Kamu udah buka album lama? Ada foto yang kelihatan beda nggak? Kalau nemu sesuatu, kabarin aku ya.');
- else if(id==='notes')sendStoryChat(index===2?'Renjun':'Haechan',index===2?'Jisung, kamu masih nyimpen catatan lama itu? Jangan langsung disimpulin dulu, ya. Coba lihat tanggalnya juga.':'Eh, kamu tadi sempat bilang mau ngecek sesuatu di Notes, kan? Kalau ada yang bikin kepikiran, cerita aja.');
+ else if(id==='notes')sendStoryChat(index===2?'Renjun':'Haechan',index===2?'Jisung, kamu masih nyimpen catatan lama itu?.':'Eh, kamu tadi sempat bilang mau ngecek sesuatu di Notes, kan? Kalau ada yang aneh, kabarin gue ya.');
  else if(id==='files'&&index===0)sendStoryChat('Jeno','Aku baru inget, backup lama itu kayaknya pernah nyambung ke perangkat yang ada di dorm. Jangan dihapus dulu ya, aku coba cari cara bukanya.');
  else if(id==='files'&&index===1)sendStoryChat('Chenle','Kalau rekamannya udah ketemu, jangan buru-buru dihapus. Dengerin baik-baik dulu, terus besok kita cocokin pas ketemu.');
  else if(id==='music')sendStoryChat('Haechan','Jisung, kamu lagi dengerin The Sun? Tiba-tiba kepikiran lagu itu juga. Besok kita ngobrol, ya.');
@@ -1390,7 +1390,7 @@ choose=function(item){
   const lock=$id('lock');
   if(lock && !$id('sunLockPlayer')){
     const player=document.createElement('div');player.id='sunLockPlayer';player.setAttribute('role','button');player.tabIndex=0;
-    player.innerHTML='<div class="sunDisc">☀</div><div class="sunMeta"><b>The Sun</b><small>NCT DREAM · Sedang diputar</small></div><span class="sunBars">▂▅▃▇</span><span class="sunPlay" id="sunLockPlay">Ⅱ</span>';
+    player.innerHTML='<div class="sunDisc">☀</div><div class="sunMeta"><b>The Sun</b><small>NCT DREAM · Sedang diputar</small></div><span class="sunPlay" id="sunLockPlay">Ⅱ</span>';
     player.addEventListener('click',e=>{e.stopPropagation();if(audio.paused){audio.play().then(()=>{player.querySelector('.sunPlay').textContent='Ⅱ'}).catch(()=>{player.querySelector('.sunPlay').textContent='▶'})}else{audio.pause();player.querySelector('.sunPlay').textContent='▶'}});
     player.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();player.click()}});
     lock.appendChild(player);
@@ -2333,6 +2333,336 @@ choose=function(item){
       if (recoveryScreen) recoveryScreen.innerHTML = '';
     } catch(e) { console.warn('Recovery reset cleanup:', e); }
   }
+
+  // Make sure the Recovery tile is not recreated after the normal Photos list renders.
+  const previousList = window.list;
+  if (typeof previousList === 'function' && !previousList.__eraseRecoveryAfterReset) {
+    const wrappedList = function(id, backTo) {
+      const result = previousList.apply(this, arguments);
+      if (id === 'photos' && typeof story !== 'undefined' && story.postResetErasedRecovery) {
+        setTimeout(()=>{
+          document.querySelectorAll('#singleRecoveryAlbum,#hiddenAlbumTile,[data-recovery-tile],.recovery-album,.ap[data-go="recovery"]').forEach(el=>el.remove());
+          if (typeof CFG !== 'undefined' && CFG.apps && CFG.apps.photos) CFG.apps.photos.hiddenMemories = [];
+        }, 0);
+      }
+      return result;
+    };
+    wrappedList.__eraseRecoveryAfterReset = true;
+    window.list = wrappedList;
+  }
+
+  // The reset happens after selecting a reply to Mark. Erase Recovery at the end of that transition.
+  const previousChoose = window.choose;
+  if (typeof previousChoose === 'function' && !previousChoose.__eraseRecoveryAfterReset) {
+    const wrappedChoose = function(item) {
+      const isMarkReply = !!(item && /^mark-reply-/.test(item.id || ''));
+      const result = previousChoose.apply(this, arguments);
+      if (isMarkReply) {
+        setTimeout(eraseRecoveryAfterReset, 5200);
+        setTimeout(eraseRecoveryAfterReset, 6800);
+      }
+      return result;
+    };
+    wrappedChoose.__eraseRecoveryAfterReset = true;
+    window.choose = wrappedChoose;
+  }
+
+  // If this file is opened after a completed reset, keep the album erased on reload.
+  if (typeof story !== 'undefined' && story.postResetErasedRecovery) {
+    eraseRecoveryAfterReset();
+  }
+})();
+</script>
+
+
+
+<!-- v45: ensure the group discussion about the missing memories appears after Recovery is unlocked -->
+<script>
+(function(){
+  const memoryDiscussion = [
+    ['day','2026년 10월 21일 수요일'],
+    ['me','gue udah lihat semua foto di Recovery. kita beneran pernah lengkap bertujuh, kan?','오후 9:18'],
+    ['Chenle','gue inget tempatnya... tapi aneh, kenapa tiap kali bangun gue gak bisa inget siapa yang ada di sebelah lu?','오후 9:19'],
+    ['Renjun','karena bukan cuma Jisung yang lupa. gue juga ngerasa ada bagian dari ingatan kita yang selalu kepotong.','오후 9:20'],
+    ['Haechan','gue biasanya bakal bercanda soal beginian, tapi gue inget kita pernah nyari seseorang. dan tiap kali hampir inget, rasanya kayak kebangun dari mimpi.','오후 9:21'],
+    ['Jaemin','di foto itu ada satu tempat kosong yang harusnya gak kosong. gue kangen seseorang, tapi baru sekarang gue sadar kenapa.','오후 9:22'],
+    ['Jeno','gue nemu catatan lama di email. setiap kali siklus mimpi itu mulai lagi, tanggal dan ingatan tertentu ikut hilang. makanya kita terus merasa ada yang kurang.','오후 9:23'],
+    ['me','jadi selama ini kita semua lupa orang yang sama?','오후 9:24'],
+    ['Chenle','kayaknya iya, kita gak sengaja lupain dia. kita cuma terus bangun dan lupa lagi.','오후 9:25']
+  ];
+  function insertDiscussion(){
+    try{
+      if(typeof CFG==='undefined'||typeof chatHistory==='undefined'||typeof story==='undefined') return;
+      if(!story.recoveryUnlocked || story.finalEnding || story.loopEndingSeen || story.finalMorningSeen) return;
+      const gi=CFG.kakao.findIndex(c=>c.name==='DREAM 🌙');
+      if(gi<0) return;
+      if(!Array.isArray(chatHistory[gi])) chatHistory[gi]=[];
+      const marker='gue udah lihat semua foto di Recovery. kita beneran pernah lengkap bertujuh, kan?';
+      if(chatHistory[gi].some(m=>Array.isArray(m)&&m[1]===marker)) return;
+      chatHistory[gi].push(...memoryDiscussion.map(m=>Array.isArray(m)?m.slice():m));
+      if(typeof saveHistory==='function') saveHistory();
+      if(typeof renderKl==='function') renderKl();
+    }catch(e){ console.warn('Group memory discussion:',e); }
+  }
+  // Run after interactions, so the album's own unlock handler can update story state first.
+  document.addEventListener('click',function(){ setTimeout(insertDiscussion,350); },true);
+})();
+</script>
+
+<!-- v46: final post-reset note, no clue chat, and ordinary practice notification -->
+<script>
+(function(){
+  const FINAL_NOTE = "*maybe the ending was never about waking up.*\n\ndulu, menjadi tujuh terasa seperti sesuatu yang akan berlangsung selamanya. kami tak pernah tahu bahwa momen-momen kecil itu kelak menjadi hal-hal yang ingin kami tinggali sedikit lebih lama.\n\nmungkin itu kenapa mimpi yang sama terus berulang, until one day, we finally remembered everything.\n\nand for the first time, we let the dream end. bukan karena dia tak ingin tinggal lebih lama, but because we had finally remembered all the beautiful moments, and learned to carry them as we moved forward.\n\nthe loop was over. the memories stayed.\n\nand as six of them continued into tomorrow, the seven of them would always remain a part of yesterday.\n\n*we move forward with six, but we’ll never forget what it meant to be seven.*";
+  const RESET_NOTE = ['dream after dream','Catatan terakhir',FINAL_NOTE];
+  const TRAINING_NOTICE = 'Jeno: besok latihan jam 11. telat 1 menit push up 10 kali.';
+  let notificationShown = false;
+
+  function afterReset(){
+    try {
+      if (typeof story === 'undefined' || !story.postResetErasedRecovery) return false;
+      if (typeof CFG !== 'undefined') {
+        if (!CFG.apps) CFG.apps = {};
+        if (!CFG.apps.notes) CFG.apps.notes = {t:'Notes',l:[]};
+        CFG.apps.notes.t = 'Notes';
+        CFG.apps.notes.l = [[...RESET_NOTE]];
+        CFG.lockNotif = 'DREAM 🌙 · ' + TRAINING_NOTICE;
+      }
+      const lockNotif = document.getElementById('ln');
+      if (lockNotif && typeof CFG !== 'undefined') lockNotif.textContent = CFG.lockNotif;
+      // If Notes is currently open, replace its contents immediately without showing a clue chat.
+      const title = document.getElementById('dt');
+      if (title && /notes/i.test(title.textContent || '')) {
+        title.textContent = 'Notes';
+        const body = document.getElementById('db');
+        if (body) body.innerHTML = '<div class="note-paper" style="white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65;padding:18px 14px;color:#292725">' + FINAL_NOTE.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>';
+      }
+      return true;
+    } catch(e) { console.warn('Post-reset note patch:', e); return false; }
+  }
+
+  // Always show only the epilogue note when Notes is opened after reset.
+  const previousList = window.list;
+  if (typeof previousList === 'function' && !previousList.__dadFinalNote) {
+    const wrappedList = function(id, backTo) {
+      if (id === 'notes' && typeof story !== 'undefined' && story.postResetErasedRecovery && typeof CFG !== 'undefined') {
+        CFG.apps.notes.l = [[...RESET_NOTE]];
+      }
+      return previousList.apply(this, arguments);
+    };
+    wrappedList.__dadFinalNote = true;
+    window.list = wrappedList;
+  }
+
+  // Prevent old note-click handlers from sending the Recovery code chat after the reset.
+  const previousClue = window.triggerClueChat;
+  if (typeof previousClue === 'function' && !previousClue.__dadFinalNote) {
+    const wrappedClue = function(id, index) {
+      if (id === 'notes' && typeof story !== 'undefined' && story.postResetErasedRecovery) return;
+      return previousClue.apply(this, arguments);
+    };
+    wrappedClue.__dadFinalNote = true;
+    window.triggerClueChat = wrappedClue;
+  }
+
+
+  function ensureTrainingChatMessage() {
+    try {
+      const idx = CFG.kakao.findIndex(c => c && c.name === 'DREAM 🌙');
+      if (idx < 0) return;
+      const group = CFG.kakao[idx];
+      const dateLabel = '2026년 10월 23일 금요일';
+      const dateRow = ['day', dateLabel];
+      const text = 'Besok latihan jam 11. telat 1 menit push up 10 kali.';
+      const time = '오후 9:05';
+      const isTrainingMessage = m => Array.isArray(m) && m[0] === 'Jeno' && /latihan jam 1[01]|push up/i.test(m[1] || '');
+      const isDateRow = m => Array.isArray(m) && m[0] === 'day' && /2026년 10월 23일/.test(m[1] || '');
+      if (!Array.isArray(group.msgs)) group.msgs = [];
+      if (!Array.isArray(chatHistory[idx])) chatHistory[idx] = (group.msgs || []).map(m => Array.isArray(m) ? [...m] : ({...m}));
+
+      // Remove the outdated/duplicate post-reset training reminders, then add one
+      // dated entry after the existing conversation so it appears as a new day.
+      group.msgs = group.msgs.filter(m => !isTrainingMessage(m) && !isDateRow(m));
+      chatHistory[idx] = chatHistory[idx].filter(m => !isTrainingMessage(m) && !isDateRow(m));
+      group.msgs.push(dateRow.slice(), ['Jeno', text, time]);
+      chatHistory[idx].push(dateRow.slice(), ['Jeno', text, time]);
+      group.time = time;
+      group.unread = Math.max(Number(group.unread || 0), 1);
+      if (typeof saveHistory === 'function') saveHistory();
+      if (typeof renderKl === 'function') renderKl();
+      if (typeof activeChat !== 'undefined' && activeChat === idx && typeof paintMsg === 'function') {
+        paintMsg(dateRow.slice(), false);
+        paintMsg(['Jeno', text, time], false);
+      }
+    } catch(e) { console.warn('Training group message:', e); }
+  }
+
+  function showTrainingNotice() {
+    if (notificationShown) return;
+    if (!afterReset()) return;
+    notificationShown = true;
+    ensureTrainingChatMessage();
+    try {
+      // Use the existing iOS-style KakaoTalk notification and leave the group chat intact.
+      if (typeof showIOSNotification === 'function') showIOSNotification('DREAM 🌙', TRAINING_NOTICE);
+      else {
+        const title = document.getElementById('iosNotifTitle');
+        const body = document.getElementById('iosNotifBody');
+        const box = document.getElementById('iosNotification');
+        if (title) title.textContent = 'DREAM 🌙';
+        if (body) body.textContent = TRAINING_NOTICE;
+        if (box) box.style.display = 'block';
+      }
+    } catch(e) {}
+  }
+
+  // The existing reset/music transition starts after the selected Mark reply.
+  const previousChoose = window.choose;
+  if (typeof previousChoose === 'function' && !previousChoose.__dadFinalNote) {
+    const wrappedChoose = function(item) {
+      const isMarkReply = !!(item && /^mark-reply-/.test(item.id || ''));
+      const result = previousChoose.apply(this, arguments);
+      if (isMarkReply) {
+        setTimeout(afterReset, 7100);
+        setTimeout(showTrainingNotice, 7900);
+      }
+      return result;
+    };
+    wrappedChoose.__dadFinalNote = true;
+    window.choose = wrappedChoose;
+  }
+
+  // Preserve the ending when a completed reset is reopened or refreshed.
+  if (typeof story !== 'undefined' && story.postResetErasedRecovery) afterReset();
+})();
+</script>
+
+
+<!-- Final targeted fix: Mark persistence/reply reset; story text and media retained. -->
+<script>
+(function(){
+  'use strict';
+  if (typeof window === 'undefined') return;
+  const REPLIES = [
+    {label:'Kali ini gue udah inget semuanya.', id:'mark-reply-remember'},
+    {label:'Hyung, gue janji akan lanjut ke mimpi selanjutnya.', id:'mark-reply-dream'},
+    {label:'Sorry hyung.. Gue gak bakal lupa lagi.', id:'mark-reply-stay'}
+  ];
+  const isMarkIndex = i => {
+    try { return typeof CFG !== 'undefined' && CFG.kakao && CFG.kakao[i] && /^mark$/i.test(String(CFG.kakao[i].name||'').trim()); }
+    catch (_) { return false; }
+  };
+  const isErased = () => typeof story !== 'undefined' && !!story.postResetErasedRecovery;
+  function cleanMarkHistory(){
+    try {
+      if (typeof CFG === 'undefined' || typeof chatHistory === 'undefined') return;
+      const idx = CFG.kakao.findIndex(c => /^mark$/i.test(String(c.name||'').trim()));
+      if (idx < 0) return;
+      const list = Array.isArray(chatHistory[idx]) ? chatHistory[idx] : [];
+      const seen = new Set();
+      chatHistory[idx] = list.filter(m => {
+        if (!Array.isArray(m)) return true;
+        const body = String(m[1]||'').trim();
+        if (m[0] === 'me' && body === '...') return false;
+        if (m[0] === 'Mark' && /^(jie\.\.\. km gak masih mimpi kan\?|Jie, kamu masih mimpi ya\?)$/i.test(body)) {
+          const sig = body.toLowerCase(); if (seen.has(sig)) return false; seen.add(sig);
+        }
+        return true;
+      });
+      if (Array.isArray(CFG.kakao[idx].msgs)) {
+        const msgSeen = new Set();
+        CFG.kakao[idx].msgs = CFG.kakao[idx].msgs.filter(m => {
+          if (!Array.isArray(m)) return true;
+          const body=String(m[1]||'').trim();
+          if (m[0]==='me' && body==='...') return false;
+          if (m[0]==='Mark' && /^(jie\.\.\. km gak masihmimpi kan\?|Jie, kamu masih mimpi ya\?)$/i.test(body)) { const sig=body.toLowerCase(); if(msgSeen.has(sig))return false; msgSeen.add(sig); }
+          return true;
+        });
+      }
+      if (typeof saveHistory === 'function') saveHistory();
+    } catch(e) { console.warn('Mark chat cleanup:',e); }
+  }
+  // Suppress the placeholder reply that older patches inserted automatically when Mark appeared.
+  if (typeof window.addMsg === 'function' && !window.addMsg.__dadNoAutoEllipsis) {
+    const originalAddMsg = window.addMsg;
+    const wrappedAddMsg = function(name, text) {
+      if (name === 'me' && String(text||'').trim() === '...' && isMarkIndex(typeof activeChat === 'number' ? activeChat : -1) && !window.__dadUserInitiatedMarkReply) return;
+      return originalAddMsg.apply(this, arguments);
+    };
+    wrappedAddMsg.__dadNoAutoEllipsis = true;
+    window.addMsg = wrappedAddMsg;
+  }
+  // Every time the already-revealed Mark chat is reopened, keep the ending choices available.
+  if (typeof window.open === 'function' && !window.open.__dadMarkReopenChoices) {
+    const originalOpen = window.open;
+    const wrappedOpen = function(i) {
+      const result = originalOpen.apply(this, arguments);
+      if (!isErased() && typeof story !== 'undefined' && story.v35MarkArrived && isMarkIndex(i)) {
+        cleanMarkHistory();
+        if (typeof activeChat === 'number' && activeChat === i && typeof paintMsg === 'function') {
+          const tb = document.getElementById('tb');
+          if (tb) { tb.innerHTML = ''; (chatHistory[i] || []).forEach(m => paintMsg(m)); }
+        }
+        if (typeof setChoices === 'function') setChoices(REPLIES.map(x => ({...x})));
+      }
+      return result;
+    };
+    wrappedOpen.__dadMarkReopenChoices = true;
+    window.open = wrappedOpen;
+  }
+  // A typed reply to Mark is a real answer and should start the same ending/reset path as a choice.
+  if (typeof window.sendFreeReply === 'function' && !window.sendFreeReply.__dadMarkReplyReset) {
+    const wrappedSend = function() {
+      const input = document.getElementById('replyInput');
+      const text = input ? input.value.trim() : '';
+      if (!text || typeof activeChat !== 'number' || !isMarkIndex(activeChat) || isErased() || !(typeof story !== 'undefined' && story.v35MarkArrived)) {
+        return wrappedSend.__dadOriginal.apply(this, arguments);
+      }
+      if (input) input.value = '';
+      if (typeof addMsg === 'function') addMsg('me', text, '오후 9:32');
+      if (typeof story !== 'undefined') { story.choiceTrail = story.choiceTrail || []; story.choiceTrail.push('mark-free-reply:'+text.slice(0,90)); if (typeof saveStory==='function') saveStory(); }
+      window.__dadUserInitiatedMarkReply = true;
+      try { if (typeof window.choose === 'function') window.choose({label:'Gue masih di sini, Hyung. Gue gak bakal lupa lagi.',id:'mark-reply-stay'}); }
+      finally { window.__dadUserInitiatedMarkReply = false; }
+    };
+    wrappedSend.__dadOriginal = window.sendFreeReply;
+    wrappedSend.__dadMarkReplyReset = true;
+    window.sendFreeReply = wrappedSend;
+    const send = document.getElementById('sendReply'); if (send) send.onclick = wrappedSend;
+    const reply = document.getElementById('replyInput'); if (reply) reply.addEventListener('keydown', e => { if(e.key==='Enter'){e.preventDefault();wrappedSend();} });
+  }
+  cleanMarkHistory();
+})();
+
+</script>
+
+
+<script>
+/* Settings menu: restart all Dream After Dream progress in this browser. */
+(function(){
+  function byId(id){ return document.getElementById(id); }
+  var backButton=byId('settingsBack');
+  var restartButton=byId('restartStory');
+  if(backButton) backButton.addEventListener('click',function(){
+    if(typeof show==='function') show('home');
+  });
+  if(restartButton) restartButton.addEventListener('click',function(){
+    var confirmed=window.confirm('Mulai ulang Dream After Dream dari awal? Progres cerita yang tersimpan di browser ini akan dihapus.');
+    if(!confirmed) return;
+    try {
+      var keys=[];
+      for(var i=0;i<localStorage.length;i++){
+        var key=localStorage.key(i);
+        if(key && key.indexOf('jisung_au_')===0) keys.push(key);
+      }
+      keys.forEach(function(key){ localStorage.removeItem(key); });
+    } catch(error) {
+      window.alert('Browser tidak mengizinkan penghapusan progres. Coba buka file ini di Safari/Chrome biasa, bukan mode privat.');
+      return;
+    }
+    window.location.reload();
+  });
+})();
+</script>
 
   // Make sure the Recovery tile is not recreated after the normal Photos list renders.
   const previousList = window.list;
